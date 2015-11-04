@@ -1,3 +1,3 @@
 # BogdanHadzhievRep
 NetCracker Task
-Build: mvn clean compile assembly:single 
+Build Goals: mvn clean compile assembly:single 
