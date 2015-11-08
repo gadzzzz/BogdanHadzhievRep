@@ -8,16 +8,22 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class SqlCommand {
-	final static Logger LOGGER = Logger.getLogger(SqlCommand.class);
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		ConfigurableApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		Locale.setDefault(Locale.ENGLISH);
+		CommandExec commandExec = new CommandExec();
+		commandExec.exec();
+	}
+}
+class CommandExec{
+	final static Logger LOGGER = Logger.getLogger(SqlCommand.class);
+	static ConfigurableApplicationContext context;
+	private boolean running=true;
+	private String query = "";
+	public void exec(){
+		context = new ClassPathXmlApplicationContext("applicationContext.xml");
 		System.out.println("Connected to Database");
 		QueryInjector injector = (QueryInjector)context.getBean("queryInjector");
 		Scanner in = new Scanner(System.in);
-		boolean running=true;
-		String query = "";
 		while(running){
 			String tmpQuery = in.nextLine();
 			query=query+" "+tmpQuery;
@@ -25,6 +31,10 @@ public class SqlCommand {
 				try{
 					if(tmpQuery.charAt(i)==';'){
 						LOGGER.info(query.trim());
+						if(query.substring(0,5).toLowerCase().trim().equals("exit")){
+							running=false;
+							break;
+						}
 						if(query.substring(0,7).toLowerCase().trim().equals("create"))
 								injector.executeUpdate(query.trim());
 						if(query.substring(0,7).toLowerCase().trim().equals("update"))
@@ -47,6 +57,6 @@ public class SqlCommand {
 				}
 		}
 		context.close();
+		System.out.println("Database connection closed");
 	}
-
 }

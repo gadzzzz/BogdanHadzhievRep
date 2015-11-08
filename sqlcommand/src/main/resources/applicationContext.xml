@@ -23,4 +23,7 @@
         <bean id="queryInjector" class="org.sqlcommand.QueryInjector">
             <property name="jdbcTemplate" ref="jdbct"></property>
         </bean>
+        <bean id="outputFormatter" class="org.sqlcommand.OutputFormatter">
+            <constructor-arg><value>20</value></constructor-arg>
+        </bean>
         </beans>
