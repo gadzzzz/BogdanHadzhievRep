@@ -35,19 +35,12 @@ class CommandExec{
 							running=false;
 							break;
 						}
-						if(query.substring(0,7).toLowerCase().trim().equals("create"))
-								injector.executeUpdate(query.trim());
-						if(query.substring(0,7).toLowerCase().trim().equals("update"))
-							injector.executeUpdate(query.trim());
-						if(query.substring(0,7).toLowerCase().trim().equals("insert"))
-							injector.executeUpdate(query.trim());
-						if(query.substring(0,7).toLowerCase().trim().equals("delete"))
-							injector.executeUpdate(query.trim());
 						if(query.substring(0,7).toLowerCase().trim().equals("select")){
 							String result = injector.executeQuery(query.trim());
 							System.out.println(result);
 							LOGGER.info(result);
-						}
+						}else
+							injector.executeUpdate(query.trim());
 						query="";
 					}
 				}catch(Exception e){
